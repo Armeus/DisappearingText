@@ -20,17 +20,22 @@ class App(tk.Frame):
         self.time_left = 6
         self.timer = None
 
+    # When any character key is pressed
+    # The countdown time is started and text color is reset to black
+    # Word count label is updated with current word count
     def on_key_press(self, event):
         if event.char != '' and event.keysym != 'BackSpace':
             if self.time_left > 5:
                 self.count_down()
             self.time_left = 5
             self.text.config(foreground='#000000')
+
             words = self.text.get('1.0', 'end-1c')
             wordcount = len(re.findall('\w+', words))
             self.label.config(text=f'Words: {wordcount}')
 
     # Timer Utility
+    # When timer reach 0, text is deleted
     def count_down(self):
         if self.time_left > 0:
             self.timer = tk.Frame.after(self, 1000, self.count_down)
