@@ -1,4 +1,5 @@
 import tkinter as tk
+import re
 
 FONT = ("Helvetica", 16)
 
@@ -13,6 +14,9 @@ class App(tk.Frame):
         self.text.pack()
         self.text.focus_set()
 
+        self.label = tk.Label(text='0 words', background='white')
+        self.label.pack()
+
         self.time_left = 6
         self.timer = None
 
@@ -22,6 +26,9 @@ class App(tk.Frame):
                 self.count_down()
             self.time_left = 5
             self.text.config(foreground='#000000')
+            words = self.text.get('1.0', 'end-1c')
+            wordcount = len(re.findall('\w+', words))
+            self.label.config(text=f'Words: {wordcount}')
 
     # Timer Utility
     def count_down(self):
